@@ -1,5 +1,6 @@
 title: "用python验证蒙提霍尔问题"
 date: 2015-05-19 02:55:49
+layout: post
 categories: Python
 tags: [概率论,三门问题,Python]
 ---
@@ -48,7 +49,7 @@ tags: [概率论,三门问题,Python]
 
 
 ![蒙提霍尔解答][6]
-**定义**: 
+**定义**:
 - `事件A`为一开始玩家选择的一扇门
 - `事件H`为最后门后的结果
 
@@ -92,7 +93,7 @@ class MontyHall(object):
         self.shuffle()
 
     def shuffle(self):
-        """  
+        """
         开始新游戏
         重新分配门后的东西
         """
@@ -120,7 +121,7 @@ class MontyHall(object):
         to_be_excluded = []
         for i in xrange(len(self.doors)):
             if self.doors[i] == 0 and self.choice != i:
-                to_be_excluded.append(i)  
+                to_be_excluded.append(i)
         random.shuffle(to_be_excluded)
         for i in xrange(len(self.doors) - 2):
             self.doors[to_be_excluded[i]] = -1
@@ -134,7 +135,7 @@ class MontyHall(object):
         to_be_excluded = []
         for i in xrange(len(self.doors)):
             if self.doors[i] != -1 and i != self.choice:
-                to_be_excluded.append(i)  
+                to_be_excluded.append(i)
         random.shuffle(to_be_excluded)
         for i in xrange(len(self.doors) - 2):
             if self.doors[to_be_excluded[i]] == 1:
@@ -218,7 +219,7 @@ if __name__ == '__main__':
     x = range(0,round_num)
     y = results
     plt.figure(figsize=(8,4))
-    
+
     plt.xlabel("round")
     plt.ylabel("frequency")
     plt.title("The frequency of the success")
@@ -229,7 +230,7 @@ if __name__ == '__main__':
     p1_label = "%s and %s" % (label_var,label_mean)
     p1 = plt.plot(x,y,"-",label=p1_label,linewidth=2)
     plt.legend(loc='upper left')
-    
+
 
     pl2 = plt.figure(2)
     plt.figure(2)
@@ -301,8 +302,8 @@ def change_choice_test_large(n,m):
     for key in result:
         print "%s: %d" % (key, result[key])
     return result["yes"] / n
-    
-    
+
+
 if __name__ == '__main__':
     logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.WARNING)
     results = []
@@ -363,7 +364,7 @@ $$
 因此在主持人不知道门后的情况下打开一扇，然后发现门后是羊的情况下，换门与不换门最终的概率都是$\frac{1}{2}$
 还是可以通过程序进行模拟：
 
-``` 
+```
 def unknown_doors_choice_test(n):
     """
     主持人并不知道门后面的情况随机的开门
@@ -388,7 +389,7 @@ def unknown_doors_choice_test(n):
     logging.info("continue_count: %d" % continue_count)
     if continue_count == 0:
         return 0.0
-    return result["yes"] / continue_count   
+    return result["yes"] / continue_count
 ```
 ![此处输入图片的描述][16]
 ![此处输入图片的描述][17]
@@ -415,7 +416,7 @@ def unknown_doors_choice_test(n):
 
 ### 三囚犯问题
 
-- 亚当、比尔和查尔斯被关在一个监狱里，只有监狱看守知道谁会被判死刑，另外两位将会获释。有1／3的概率会被处死刑的亚当，给他母亲写了一封信，想要获释的比尔或查尔斯帮忙代寄。当亚当问看守他应当把他的信交给比尔还是查尔斯时，这位富有同情心的看守很为难。他认为如果他把将要获释的人的名字告诉亚当，那么亚当就会有1／2的概率被判死刑，因为剩下的人和亚当这两人中一定有一个人被处死。如果他隐瞒这信息，亚当被处死的概率是1／3。既然亚当知道其他两人中必有一人会获释，那么亚当自己被处死的概率怎么可能会因为看守告诉他其他两人中被获释者的姓名后而改变呢？ 
+- 亚当、比尔和查尔斯被关在一个监狱里，只有监狱看守知道谁会被判死刑，另外两位将会获释。有1／3的概率会被处死刑的亚当，给他母亲写了一封信，想要获释的比尔或查尔斯帮忙代寄。当亚当问看守他应当把他的信交给比尔还是查尔斯时，这位富有同情心的看守很为难。他认为如果他把将要获释的人的名字告诉亚当，那么亚当就会有1／2的概率被判死刑，因为剩下的人和亚当这两人中一定有一个人被处死。如果他隐瞒这信息，亚当被处死的概率是1／3。既然亚当知道其他两人中必有一人会获释，那么亚当自己被处死的概率怎么可能会因为看守告诉他其他两人中被获释者的姓名后而改变呢？
 > 正确的答案是：看守不用当心，因为即使把获释人的姓名告诉亚当，亚当被处死的概率仍然是1／3，没有改变。但是，剩下的那位没被点名的人就有2／3的概率被处死（被处死的可能性升高了）。如果这个问题换一种说法，就是看守无意间说出了查尔斯不会死。那么概率就会发生改变。
 
 > 这个其实和三门问题是一致的。你可以把狱卒当成主持人，被处死当成是大奖，那么这个是对应于三门问题的第一种情况，就是主持人知道门后面的情况。狱卒说出谁会被释放，相当于主持人打开一扇门。但是因为三囚徒问题不能选择，也就相当于三门问题中的不换门的策略。最终的概率还是1/3是没有发生改变的。
