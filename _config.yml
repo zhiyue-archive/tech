@@ -1,4 +1,3 @@
-markdown: rdiscount
 permalink: /:title/
 url: http://tech.printf.me
 name: tech.printf.me
